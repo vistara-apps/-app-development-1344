@@ -1,43 +1,33 @@
 import React, { useState } from 'react'
-import { Sidebar } from './components/Sidebar'
-import { Header } from './components/Header'
-import { Dashboard } from './components/Dashboard'
-import { Trading } from './components/Trading'
-import { Analytics } from './components/Analytics'
-import { Settings } from './components/Settings'
+import AppShell from './components/AppShell'
+import Dashboard from './components/Dashboard'
+import Trading from './components/Trading'
+import Analytics from './components/Analytics'
+import Settings from './components/Settings'
 
 function App() {
   const [activeTab, setActiveTab] = useState('dashboard')
-  const [subscriptionTier, setSubscriptionTier] = useState('basic')
 
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard':
-        return <Dashboard subscriptionTier={subscriptionTier} />
+        return <Dashboard />
       case 'trading':
-        return <Trading subscriptionTier={subscriptionTier} />
+        return <Trading />
       case 'analytics':
-        return <Analytics subscriptionTier={subscriptionTier} />
+        return <Analytics />
       case 'settings':
-        return <Settings subscriptionTier={subscriptionTier} setSubscriptionTier={setSubscriptionTier} />
+        return <Settings />
       default:
-        return <Dashboard subscriptionTier={subscriptionTier} />
+        return <Dashboard />
     }
   }
 
   return (
-    <div className="min-h-screen bg-gradient-primary">
-      <div className="flex h-screen">
-        <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <Header subscriptionTier={subscriptionTier} />
-          <main className="flex-1 overflow-y-auto p-4 lg:p-6">
-            <div className="max-w-7xl mx-auto">
-              {renderContent()}
-            </div>
-          </main>
-        </div>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-primary-900 via-primary-800 to-accent-600">
+      <AppShell activeTab={activeTab} onTabChange={setActiveTab}>
+        {renderContent()}
+      </AppShell>
     </div>
   )
 }
